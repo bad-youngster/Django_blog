@@ -1,0 +1,99 @@
+python django 安装及测试程序使用
+1.安装Python
+Python的版本有 2.7.* ,3.0.*
+anaconda 3.0.*
+2.下载安装anaconda 3版本
+略，一路下一步
+3.编辑器 pycharm
+略，一路下一步
+4.设置anaconda环境变量
+打开win7 的环境变量
+我的电脑>属性>高级系统设置>环境变量设置>path
+添加;C:\ProgramData\Anaconda3;C:\ProgramData\Anaconda3\Scripts;
+打开cmd ，输入python，conda
+5.anaconda和pycharm的使用
+打开pycharm，setting>Project Interpreter >add local>Base interpreter >选择你的anaconda的安装路径下python.exe
+6.安装django
+虽然anaconda带有大量的插件包，但是django还是需要额外安装
+6.1 打开cmd
+	conda install django
+7.创建django的项目，（建议使用cmd窗口创建，pycharm创建看不到完整的过程）
+django-admin startproject django_blog  --(project name)
+创建app程序，app程序可以有很多
+先到创建好的项目的目录下，可以看到manager.py 
+python manager.py startapp app_name
+创建数据，使用交互式
+python manager.py makemigrations
+python manager.py migrate
+清空数据库
+python manager.py flush
+创建超级用户
+python manager.py createsuperuser
+修改密码
+python manager.py changepassword username
+启动server 
+python manager.py runserver
+目录结构
+django_blog
+├── manage.py
+└── django_blog
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
+django_blog/
+├── app_name
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── models.py
+│   ├── tests.py
+│   └── views.py
+├── manage.py
+└── django_blog
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
+8.django终端使用
+python manager.py shell
+9.使用pycharm打开项目
+编辑setting.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'app', --这里是我们创建的app只需要把app name按照格式填写就行
+
+]
+编辑models.py模块，添加如下代码
+from django.db import models
+
+# Create your models here.
+
+
+class Article(models.Model):
+    title = models.CharField(u"title",max_length=256)
+    content = models.TextField(u"file")
+
+    pub_date = models.DateField(u"start date",auto_now_add=True,editable=True)
+    update_time = models.DateTimeField(u"update time",auto_now_add=True,null=True)
+10.同步数据库
+打开cmd，在项目的目录下
+python manage.py makemigrations
+python manage.py migrate
+11.修改admin.py
+from django.contrib import admin
+from .models import Article
+
+# Register your models here.
+admin.site.register(Article)
+
+12.在cmd运行
+python manage.py runserver
+13.打开浏览器输入
+http://127.0.0.1:8000/admin
+能看到我们新加的Article
+可以尝试添加一些内容
