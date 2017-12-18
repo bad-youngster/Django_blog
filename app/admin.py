@@ -10,5 +10,5 @@ class PersonAdmin(admin.ModelAdmin):
     list_display = ('full_name',)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Person, PersonAdmin)
-
+88
 
